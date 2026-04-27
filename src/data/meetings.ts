@@ -28,10 +28,8 @@ export const meetings: Meeting[] = [
   // Leo / Elena pairing
   { id: 'mtg-w1-leo-elena', employeeIds: ['leo', 'elena'], name: 'Leo / Elena Pairing', date: '2026-03-02', durationMins: 30 },
 
-  // David's external meetings (long blocks, mostly solo from our team's perspective)
-  { id: 'mtg-w1-david-ext-1', employeeIds: ['david'], name: 'Stakeholder Sync', date: '2026-03-02', durationMins: 240 },
-  { id: 'mtg-w1-david-ext-2', employeeIds: ['david'], name: 'Cross-Team Planning', date: '2026-03-03', durationMins: 240 },
-  { id: 'mtg-w1-david-ext-3', employeeIds: ['david'], name: 'Vendor Review', date: '2026-03-05', durationMins: 240 },
+  // David — light week, just one Beacon meeting
+  { id: 'mtg-w1-david-ext-1', employeeIds: ['david'], name: 'Beacon Check-in', date: '2026-03-03', durationMins: 30 },
 
   // Grace cross-project check-in
   { id: 'mtg-w1-grace-cross', employeeIds: ['grace', 'alice', 'bob'], name: 'Cross-Project Sync', date: '2026-03-04', durationMins: 30 },
@@ -58,10 +56,9 @@ export const meetings: Meeting[] = [
   // Leo / Elena pairing
   { id: 'mtg-w2-leo-elena', employeeIds: ['leo', 'elena'], name: 'Leo / Elena Pairing', date: '2026-03-09', durationMins: 30 },
 
-  // David's external meetings
+  // David — meetings start ramping, 2 external at 240 min each
   { id: 'mtg-w2-david-ext-1', employeeIds: ['david'], name: 'Stakeholder Sync', date: '2026-03-09', durationMins: 240 },
   { id: 'mtg-w2-david-ext-2', employeeIds: ['david'], name: 'Cross-Team Planning', date: '2026-03-10', durationMins: 240 },
-  { id: 'mtg-w2-david-ext-3', employeeIds: ['david'], name: 'Architecture Review', date: '2026-03-12', durationMins: 240 },
 
   // Grace cross-project check-in
   { id: 'mtg-w2-grace-cross', employeeIds: ['grace', 'alice', 'bob'], name: 'Cross-Project Sync', date: '2026-03-11', durationMins: 30 },
@@ -95,10 +92,11 @@ export const meetings: Meeting[] = [
   // Leo / Elena pairing
   { id: 'mtg-w3-leo-elena', employeeIds: ['leo', 'elena'], name: 'Leo / Elena Pairing', date: '2026-03-16', durationMins: 30 },
 
-  // David's external meetings (still heavy)
+  // David — meetings dominate, 4 external at 240 min each
   { id: 'mtg-w3-david-ext-1', employeeIds: ['david'], name: 'Stakeholder Sync', date: '2026-03-16', durationMins: 240 },
-  { id: 'mtg-w3-david-ext-2', employeeIds: ['david'], name: 'Budget Review', date: '2026-03-17', durationMins: 240 },
-  { id: 'mtg-w3-david-ext-3', employeeIds: ['david'], name: 'Cross-Team Planning', date: '2026-03-19', durationMins: 240 },
+  { id: 'mtg-w3-david-ext-2', employeeIds: ['david'], name: 'Cross-Team Planning', date: '2026-03-17', durationMins: 240 },
+  { id: 'mtg-w3-david-ext-3', employeeIds: ['david'], name: 'Budget Review', date: '2026-03-18', durationMins: 240 },
+  { id: 'mtg-w3-david-ext-4', employeeIds: ['david'], name: 'Architecture Review', date: '2026-03-19', durationMins: 240 },
 
   // Grace cross-project (now including James bridging)
   { id: 'mtg-w3-grace-cross', employeeIds: ['grace', 'james', 'frank'], name: 'Cross-Project Sync', date: '2026-03-18', durationMins: 30 },
@@ -117,8 +115,8 @@ export const meetings: Meeting[] = [
   // No more Atlas standups — project shipped
 
   // Beacon standup (Tue, Thu) — bigger now with Alice/Henry joining
-  { id: 'mtg-w4-beacon-1', employeeIds: [...beaconCore, 'alice', 'henry'], name: 'Beacon Standup', date: '2026-03-24', durationMins: 30 },
-  { id: 'mtg-w4-beacon-2', employeeIds: [...beaconCore, 'alice', 'henry'], name: 'Beacon Standup', date: '2026-03-26', durationMins: 30 },
+  { id: 'mtg-w4-beacon-1', employeeIds: ['bob', 'elena', 'grace', 'james', 'leo', 'alice', 'henry'], name: 'Beacon Standup', date: '2026-03-24', durationMins: 30 },
+  { id: 'mtg-w4-beacon-2', employeeIds: ['bob', 'elena', 'grace', 'james', 'leo', 'alice', 'henry'], name: 'Beacon Standup', date: '2026-03-26', durationMins: 30 },
 
   // Cipher standup (Frank + James)
   { id: 'mtg-w4-cipher-1', employeeIds: ['frank', 'james'], name: 'Cipher Standup', date: '2026-03-24', durationMins: 30 },
@@ -132,11 +130,12 @@ export const meetings: Meeting[] = [
   // Leo / Elena pairing
   { id: 'mtg-w4-leo-elena', employeeIds: ['leo', 'elena'], name: 'Leo / Elena Pairing', date: '2026-03-23', durationMins: 30 },
 
-  // David's external meetings (still heavy, now disengaging from team)
+  // David — all meetings, 5 external at 240 min each
   { id: 'mtg-w4-david-ext-1', employeeIds: ['david'], name: 'Stakeholder Sync', date: '2026-03-23', durationMins: 240 },
   { id: 'mtg-w4-david-ext-2', employeeIds: ['david'], name: 'Cross-Team Planning', date: '2026-03-24', durationMins: 240 },
   { id: 'mtg-w4-david-ext-3', employeeIds: ['david'], name: 'Quarterly Review', date: '2026-03-25', durationMins: 240 },
   { id: 'mtg-w4-david-ext-4', employeeIds: ['david'], name: 'Vendor Negotiation', date: '2026-03-26', durationMins: 240 },
+  { id: 'mtg-w4-david-ext-5', employeeIds: ['david'], name: 'Budget Review', date: '2026-03-27', durationMins: 240 },
 
   // Grace cross-project — still doing it but feeling the load
   { id: 'mtg-w4-grace-cross', employeeIds: ['grace', 'james', 'frank'], name: 'Cross-Project Sync', date: '2026-03-25', durationMins: 30 },

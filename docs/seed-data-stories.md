@@ -14,7 +14,7 @@ Overall structure:
 - Engagement surveys have an 80% response rate
 
 PR approvals: Alice approves Atlas PRs, Bob approves Beacon PRs, Frank self-merges Cipher weeks 1-2 / James approves weeks 3-4.
-Survey skips (~2/week): Iris skips most weeks, David skips week 4, others occasionally.
+Survey skips (~2/week): Iris skips weeks 1-2, Frank skips week 1, others occasionally.
 
 ## Alice Nakamura — Backend Tech Lead — Atlas
 - Weeks 1-2: Heads-down on Atlas. Only has 1-1s with Henry and Karen. Doesn't comment or review PRs outside the trio.
@@ -27,15 +27,17 @@ Survey skips (~2/week): Iris skips most weeks, David skips week 4, others occasi
 - Week 4: Bottleneck — reviewing 6+ PRs/week, own output stops entirely. Blocker mentions being stretched thin.
 
 ## Carol Okonkwo — Senior FE Engineer — Beacon
-- Weeks 1-2: Solid output, good mood, engaged in meetings and PR reviews.
-- Week 3: Mood drops, PR output slows. Survey mentions feeling stuck on a hard problem.
-- Week 4: Mood continues declining, blockers mention lack of clarity on priorities. Needs attention.
+Declining duo with Iris. Co-own a Beacon feature that goes sideways.
+- Weeks 1-2: Solid output (5 PRs), good mood (4). Comments on Iris's PRs and vice versa.
+- Week 3: Mood drops to 3 (yellow). Output drops to 3 PRs. Blocker: unclear requirements on shared feature with Iris.
+- Week 4: Mood drops to 2 (red). 1 PR. Blocker: "stuck, no direction, frustrated." Tightly connected to Iris but both struggling.
 
 ## David Petrov — Senior BE Engineer — Beacon
-Low PR output, lots of long meetings (mostly outside the team, use 4+ hour blocks for simplicity).
-- Weeks 1-2: Heavy meetings seem fine — onboarding stakeholders, cross-team coordination. Mood neutral.
-- Week 3: Still no output, but meetings continue. Starting to look concerning.
-- Week 4: Mood drops. Blockers mention meetings eating all his time. No PRs, disengaging from team channels.
+Reverse arc: starts as a productive engineer, gets consumed by meetings.
+- Week 1: Normal engineer. 5 PRs, 2-3 meetings (30 min each), mood 4. Working on Beacon backend.
+- Week 2: Meetings start ramping. 3 PRs, 4 meetings (some 4hr external blocks appear). Mood 3.
+- Week 3: Meetings dominate. 1 PR, 6+ meetings (mostly 4hr external). Mood 2. Blocker: "too many meetings."
+- Week 4: Zero PRs, 8+ meetings (all 4hr external). Mood 1. Blocker: "haven't written code in weeks."
 
 ## Elena Vasquez — FE Engineer — Beacon
 New hire ramping up.
@@ -45,9 +47,10 @@ New hire ramping up.
 - Week 4: Fully ramped. Mentions Leo as helpful in every survey.
 
 ## Frank Washington — Staff BE Engineer — Cipher
-- Weeks 1-2: Lone wolf. High PR output, doesn't attend most meetings, doesn't review others' PRs. Mood is fine — just independent.
-- Week 3: James starts bridging into Cipher. Frank begins attending Cipher planning meetings.
-- Week 4: Slight reconnection — reviewing James's PRs, attending a couple more meetings. Still high output.
+Extreme lone wolf. Doubled output.
+- Weeks 1-2: 14 PRs/week. All self-approved, zero commenters. Doesn't attend meetings or review others.
+- Week 3: 12 PRs. James starts commenting on some. Frank attends Cipher planning.
+- Week 4: 12 PRs. James approves and comments. Slight reconnection but still massive solo output.
 
 ## Grace Kim — Senior Fullstack Engineer — Beacon + cross-cutting
 Glue person / connector. Comments on everyone's PRs, attends cross-project meetings, frequently mentioned as helpful.
@@ -61,8 +64,10 @@ Glue person / connector. Comments on everyone's PRs, attends cross-project meeti
 - Week 4: Re-engaging with the team. Reviewing PRs outside the trio. Positive mood.
 
 ## Iris Chakraborty — Senior FE Engineer — Beacon
-Strong individual contributor, quiet in surveys.
-- Weeks 1-4: Consistently high PR output, good quality. Terse survey responses, low meeting attendance. Mood is steady and neutral. Not a problem — just a contrast to Grace's style. Stable baseline.
+Declining duo with Carol. Co-own a Beacon feature that goes sideways.
+- Weeks 1-2: High output (6 PRs), good mood (4). Comments on Carol's PRs. Quiet in surveys but responds.
+- Week 3: Mood drops to 3 (yellow). Output drops to 4 PRs. Blocker: unclear requirements on shared feature with Carol. Responds to survey.
+- Week 4: Mood drops to 2 (red). 2 PRs. Blocker: "blocked on decisions, feature is stalled." Responds to survey.
 
 ## James Liu — Fullstack Engineer — Beacon / Cipher
 Cross-project bridge.

@@ -23,21 +23,32 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w1-carol-4', title: 'Add export CSV feature to dashboard', authorId: 'carol', commenterIds: ['bob', 'leo'], approverId: 'bob', date: '2026-03-05' },
   { id: 'pr-w1-carol-5', title: 'Fix responsive layout for Beacon cards', authorId: 'carol', commenterIds: ['iris'], approverId: 'bob', date: '2026-03-06' },
 
-  // David — 1 PR (low output, heavy meetings)
-  { id: 'pr-w1-david-1', title: 'Update API client configuration', authorId: 'david', commenterIds: ['grace', 'alice'], approverId: 'bob', date: '2026-03-04' },
+  // David — 5 PRs, Beacon backend themed. Approved by Bob. Commenters include bob, grace.
+  { id: 'pr-w1-david-1', title: 'Add REST endpoints for user profiles', authorId: 'david', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-02' },
+  { id: 'pr-w1-david-2', title: 'Build data pipeline ingestion service', authorId: 'david', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-03' },
+  { id: 'pr-w1-david-3', title: 'Add Redis caching layer for API responses', authorId: 'david', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-04' },
+  { id: 'pr-w1-david-4', title: 'Implement batch job scheduler', authorId: 'david', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-05' },
+  { id: 'pr-w1-david-5', title: 'Add API rate limiting middleware', authorId: 'david', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-06' },
 
   // Elena — 2 PRs (new hire, ramping). Approved by Bob. Lots of comment questions.
   { id: 'pr-w1-elena-1', title: 'Add loading spinner to Beacon pages', authorId: 'elena', commenterIds: ['leo', 'bob', 'grace'], approverId: 'bob', date: '2026-03-04' },
   { id: 'pr-w1-elena-2', title: 'Fix button alignment in Beacon header', authorId: 'elena', commenterIds: ['leo', 'grace'], approverId: 'bob', date: '2026-03-06' },
 
-  // Frank — 7 PRs (high output, lone wolf). Self-approves. No outside commenters.
+  // Frank — 14 PRs (doubled output, lone wolf). Self-approves. No outside commenters.
   { id: 'pr-w1-frank-1', title: 'Implement SSO token validation', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-02' },
   { id: 'pr-w1-frank-2', title: 'Add permission scope parser', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-02' },
-  { id: 'pr-w1-frank-3', title: 'Build role hierarchy resolver', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-03' },
-  { id: 'pr-w1-frank-4', title: 'Add audit logging for auth events', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-04' },
-  { id: 'pr-w1-frank-5', title: 'Implement RBAC middleware', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-05' },
-  { id: 'pr-w1-frank-6', title: 'Add session invalidation endpoint', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-05' },
-  { id: 'pr-w1-frank-7', title: 'Fix token refresh race condition', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-06' },
+  { id: 'pr-w1-frank-3', title: 'Build role hierarchy resolver', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-02' },
+  { id: 'pr-w1-frank-4', title: 'Add audit logging for auth events', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-03' },
+  { id: 'pr-w1-frank-5', title: 'Implement RBAC middleware', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-03' },
+  { id: 'pr-w1-frank-6', title: 'Add session invalidation endpoint', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-03' },
+  { id: 'pr-w1-frank-7', title: 'Fix token refresh race condition', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-04' },
+  { id: 'pr-w1-frank-8', title: 'Add MFA enrollment verification', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-04' },
+  { id: 'pr-w1-frank-9', title: 'Implement OAuth2 authorization flow', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-04' },
+  { id: 'pr-w1-frank-10', title: 'Build certificate pinning validator', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-05' },
+  { id: 'pr-w1-frank-11', title: 'Add encryption key derivation module', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-05' },
+  { id: 'pr-w1-frank-12', title: 'Implement SAML response handler', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-05' },
+  { id: 'pr-w1-frank-13', title: 'Add session management cookie config', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-06' },
+  { id: 'pr-w1-frank-14', title: 'Build API key hashing utility', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-06' },
 
   // Grace — 3 PRs (moderate output, high collaboration). Comments on many others.
   { id: 'pr-w1-grace-1', title: 'Add shared error boundary component', authorId: 'grace', commenterIds: ['bob', 'carol'], approverId: 'bob', date: '2026-03-02' },
@@ -100,22 +111,31 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w2-carol-4', title: 'Add Beacon widget drag-and-drop', authorId: 'carol', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-12' },
   { id: 'pr-w2-carol-5', title: 'Fix Beacon chart animation jank', authorId: 'carol', commenterIds: ['iris', 'bob'], approverId: 'bob', date: '2026-03-13' },
 
-  // David — 1 PR
-  { id: 'pr-w2-david-1', title: 'Update Beacon API endpoint docs', authorId: 'david', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-11' },
+  // David — 3 PRs (fewer, declining). Beacon backend themed.
+  { id: 'pr-w2-david-1', title: 'Update API pagination defaults', authorId: 'david', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-09' },
+  { id: 'pr-w2-david-2', title: 'Add request logging middleware', authorId: 'david', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-11' },
+  { id: 'pr-w2-david-3', title: 'Fix data pipeline retry logic', authorId: 'david', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-13' },
 
   // Elena — 3 PRs (ramping up)
   { id: 'pr-w2-elena-1', title: 'Add user avatar component', authorId: 'elena', commenterIds: ['leo', 'bob'], approverId: 'bob', date: '2026-03-09' },
   { id: 'pr-w2-elena-2', title: 'Build Beacon settings page layout', authorId: 'elena', commenterIds: ['leo', 'grace'], approverId: 'bob', date: '2026-03-11' },
   { id: 'pr-w2-elena-3', title: 'Add form field validation messages', authorId: 'elena', commenterIds: ['leo'], approverId: 'bob', date: '2026-03-13' },
 
-  // Frank — 7 PRs, still lone wolf
+  // Frank — 14 PRs (doubled, still lone wolf). Self-approves. No outside commenters.
   { id: 'pr-w2-frank-1', title: 'Build OAuth2 provider integration', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-09' },
   { id: 'pr-w2-frank-2', title: 'Add SAML assertion parser', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-09' },
-  { id: 'pr-w2-frank-3', title: 'Implement MFA enrollment flow', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-10' },
-  { id: 'pr-w2-frank-4', title: 'Add API key rotation mechanism', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-11' },
-  { id: 'pr-w2-frank-5', title: 'Build permission policy engine', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-12' },
-  { id: 'pr-w2-frank-6', title: 'Add cross-origin auth handling', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-12' },
-  { id: 'pr-w2-frank-7', title: 'Fix token expiry edge cases', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-13' },
+  { id: 'pr-w2-frank-3', title: 'Implement MFA enrollment flow', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-09' },
+  { id: 'pr-w2-frank-4', title: 'Add API key rotation mechanism', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-10' },
+  { id: 'pr-w2-frank-5', title: 'Build permission policy engine', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-10' },
+  { id: 'pr-w2-frank-6', title: 'Add cross-origin auth handling', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-10' },
+  { id: 'pr-w2-frank-7', title: 'Fix token expiry edge cases', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-11' },
+  { id: 'pr-w2-frank-8', title: 'Implement certificate chain validator', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-11' },
+  { id: 'pr-w2-frank-9', title: 'Add TOTP secret generation module', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-12' },
+  { id: 'pr-w2-frank-10', title: 'Build session fingerprint tracker', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-12' },
+  { id: 'pr-w2-frank-11', title: 'Add OAuth scope consent screen', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-12' },
+  { id: 'pr-w2-frank-12', title: 'Implement JWT claim validation', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-13' },
+  { id: 'pr-w2-frank-13', title: 'Add PKCE challenge verification', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-13' },
+  { id: 'pr-w2-frank-14', title: 'Build auth token blacklist service', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-13' },
 
   // Grace — 3 PRs
   { id: 'pr-w2-grace-1', title: 'Add global notification system', authorId: 'grace', commenterIds: ['bob', 'james'], approverId: 'bob', date: '2026-03-09' },
@@ -172,12 +192,13 @@ export const pullRequests: PullRequest[] = [
   // Bob — 1 PR (own output dropping, reviewing 5+ PRs)
   { id: 'pr-w3-bob-1', title: 'Update Beacon build configuration', authorId: 'bob', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-18' },
 
-  // Carol — 3 PRs (slowing down, mood dropping)
-  { id: 'pr-w3-carol-1', title: 'Add Beacon data aggregation view', authorId: 'carol', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-16' },
-  { id: 'pr-w3-carol-2', title: 'Fix Beacon filter state persistence', authorId: 'carol', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-18' },
-  { id: 'pr-w3-carol-3', title: 'Update Beacon chart color scheme', authorId: 'carol', commenterIds: ['iris'], approverId: 'bob', date: '2026-03-20' },
+  // Carol — 3 PRs (slowing down, blocker-themed). Iris commenting on some.
+  { id: 'pr-w3-carol-1', title: 'Fix Beacon deploy pipeline blocker', authorId: 'carol', commenterIds: ['bob', 'iris'], approverId: 'bob', date: '2026-03-16' },
+  { id: 'pr-w3-carol-2', title: 'Resolve Beacon build dependency conflict', authorId: 'carol', commenterIds: ['bob', 'iris'], approverId: 'bob', date: '2026-03-18' },
+  { id: 'pr-w3-carol-3', title: 'Unblock Beacon CI with test fix', authorId: 'carol', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-20' },
 
-  // David — 0 PRs this week
+  // David — 1 PR (declining further)
+  { id: 'pr-w3-david-1', title: 'Update cache expiration config', authorId: 'david', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-18' },
 
   // Elena — 5 PRs (at team average now)
   { id: 'pr-w3-elena-1', title: 'Build Beacon user preferences page', authorId: 'elena', commenterIds: ['leo', 'bob'], approverId: 'bob', date: '2026-03-16' },
@@ -186,13 +207,19 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w3-elena-4', title: 'Add Beacon timezone support', authorId: 'elena', commenterIds: ['leo', 'james'], approverId: 'bob', date: '2026-03-19' },
   { id: 'pr-w3-elena-5', title: 'Fix Beacon locale formatting', authorId: 'elena', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-20' },
 
-  // Frank — 6 PRs (still high, James now commenting)
+  // Frank — 12 PRs (James starts commenting on ~half). Still self-approves.
   { id: 'pr-w3-frank-1', title: 'Add Cipher key rotation scheduler', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-16' },
-  { id: 'pr-w3-frank-2', title: 'Implement Cipher cert pinning', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-17' },
-  { id: 'pr-w3-frank-3', title: 'Build Cipher admin audit trail', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-18' },
-  { id: 'pr-w3-frank-4', title: 'Add Cipher IP allowlist feature', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-19' },
-  { id: 'pr-w3-frank-5', title: 'Implement Cipher device trust', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-19' },
-  { id: 'pr-w3-frank-6', title: 'Fix Cipher session migration', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-20' },
+  { id: 'pr-w3-frank-2', title: 'Implement Cipher cert pinning', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-16' },
+  { id: 'pr-w3-frank-3', title: 'Build Cipher admin audit trail', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-17' },
+  { id: 'pr-w3-frank-4', title: 'Add Cipher IP allowlist feature', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-17' },
+  { id: 'pr-w3-frank-5', title: 'Implement Cipher device trust', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-18' },
+  { id: 'pr-w3-frank-6', title: 'Fix Cipher session migration', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-18' },
+  { id: 'pr-w3-frank-7', title: 'Add Cipher SCIM provisioning endpoint', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-19' },
+  { id: 'pr-w3-frank-8', title: 'Implement Cipher token introspection', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-19' },
+  { id: 'pr-w3-frank-9', title: 'Build Cipher security headers middleware', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-19' },
+  { id: 'pr-w3-frank-10', title: 'Add Cipher password breach detection', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-20' },
+  { id: 'pr-w3-frank-11', title: 'Implement Cipher rate limit per tenant', authorId: 'frank', commenterIds: [], approverId: 'frank', date: '2026-03-20' },
+  { id: 'pr-w3-frank-12', title: 'Fix Cipher CORS policy for SSO callback', authorId: 'frank', commenterIds: ['james'], approverId: 'frank', date: '2026-03-20' },
 
   // Grace — 3 PRs (still connecting, starting to feel load)
   { id: 'pr-w3-grace-1', title: 'Add cross-project type sharing', authorId: 'grace', commenterIds: ['alice', 'bob'], approverId: 'bob', date: '2026-03-16' },
@@ -204,13 +231,11 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w3-henry-2', title: 'Atlas documentation update', authorId: 'henry', commenterIds: ['alice'], approverId: 'alice', date: '2026-03-18' },
   { id: 'pr-w3-henry-3', title: 'Review and update API versioning', authorId: 'henry', commenterIds: ['grace', 'bob'], approverId: 'bob', date: '2026-03-20' },
 
-  // Iris — 6 PRs (consistent)
-  { id: 'pr-w3-iris-1', title: 'Build Beacon funnel chart', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-16' },
+  // Iris — 4 PRs (down from 6). Carol commenting on some.
+  { id: 'pr-w3-iris-1', title: 'Build Beacon funnel chart', authorId: 'iris', commenterIds: ['bob', 'carol'], approverId: 'bob', date: '2026-03-16' },
   { id: 'pr-w3-iris-2', title: 'Add Beacon sankey diagram', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-17' },
   { id: 'pr-w3-iris-3', title: 'Implement Beacon gauge widget', authorId: 'iris', commenterIds: ['carol'], approverId: 'bob', date: '2026-03-18' },
-  { id: 'pr-w3-iris-4', title: 'Add Beacon chart annotations', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-19' },
-  { id: 'pr-w3-iris-5', title: 'Build Beacon radar chart', authorId: 'iris', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-19' },
-  { id: 'pr-w3-iris-6', title: 'Fix Beacon chart legend overflow', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-20' },
+  { id: 'pr-w3-iris-4', title: 'Add Beacon chart annotations', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-20' },
 
   // James — 4 PRs (split: 2 Beacon, 2 Cipher)
   { id: 'pr-w3-james-1', title: 'Add Beacon live metrics panel', authorId: 'james', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-16' },
@@ -246,9 +271,8 @@ export const pullRequests: PullRequest[] = [
 
   // Bob — 0 PRs (bottleneck, only reviewing)
 
-  // Carol — 2 PRs (declining)
-  { id: 'pr-w4-carol-1', title: 'Fix Beacon dashboard scroll behavior', authorId: 'carol', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-24' },
-  { id: 'pr-w4-carol-2', title: 'Update Beacon chart accessibility', authorId: 'carol', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-27' },
+  // Carol — 1 PR (declining further). Iris comments.
+  { id: 'pr-w4-carol-1', title: 'Fix Beacon dashboard scroll behavior', authorId: 'carol', commenterIds: ['iris'], approverId: 'bob', date: '2026-03-25' },
 
   // David — 0 PRs
 
@@ -259,13 +283,19 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w4-elena-4', title: 'Add Beacon share dashboard feature', authorId: 'elena', commenterIds: ['leo'], approverId: 'bob', date: '2026-03-26' },
   { id: 'pr-w4-elena-5', title: 'Fix Beacon widget resize handles', authorId: 'elena', commenterIds: ['carol', 'bob'], approverId: 'bob', date: '2026-03-27' },
 
-  // Frank — 6 PRs (still high, James approves now)
+  // Frank — 12 PRs (James approves and comments on most)
   { id: 'pr-w4-frank-1', title: 'Add Cipher compliance reporting', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-23' },
-  { id: 'pr-w4-frank-2', title: 'Implement Cipher data encryption', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-24' },
-  { id: 'pr-w4-frank-3', title: 'Build Cipher access review flow', authorId: 'frank', commenterIds: ['james', 'alice'], approverId: 'james', date: '2026-03-25' },
-  { id: 'pr-w4-frank-4', title: 'Add Cipher breach detection alerts', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-25' },
-  { id: 'pr-w4-frank-5', title: 'Implement Cipher password policy', authorId: 'frank', commenterIds: [], approverId: 'james', date: '2026-03-26' },
-  { id: 'pr-w4-frank-6', title: 'Fix Cipher concurrent session limit', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-27' },
+  { id: 'pr-w4-frank-2', title: 'Implement Cipher data encryption at rest', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-23' },
+  { id: 'pr-w4-frank-3', title: 'Build Cipher access review flow', authorId: 'frank', commenterIds: ['james', 'alice'], approverId: 'james', date: '2026-03-24' },
+  { id: 'pr-w4-frank-4', title: 'Add Cipher breach detection alerts', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-24' },
+  { id: 'pr-w4-frank-5', title: 'Implement Cipher password policy engine', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-25' },
+  { id: 'pr-w4-frank-6', title: 'Fix Cipher concurrent session limit', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-25' },
+  { id: 'pr-w4-frank-7', title: 'Add Cipher mutual TLS handshake', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-25' },
+  { id: 'pr-w4-frank-8', title: 'Implement Cipher HSM key wrapping', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-26' },
+  { id: 'pr-w4-frank-9', title: 'Build Cipher audit log export API', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-26' },
+  { id: 'pr-w4-frank-10', title: 'Add Cipher FIDO2 WebAuthn support', authorId: 'frank', commenterIds: [], approverId: 'james', date: '2026-03-26' },
+  { id: 'pr-w4-frank-11', title: 'Implement Cipher secrets vault integration', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-27' },
+  { id: 'pr-w4-frank-12', title: 'Fix Cipher token revocation propagation', authorId: 'frank', commenterIds: ['james'], approverId: 'james', date: '2026-03-27' },
 
   // Grace — 2 PRs (output dropping, spread thin)
   { id: 'pr-w4-grace-1', title: 'Add shared component documentation', authorId: 'grace', commenterIds: ['bob', 'elena'], approverId: 'bob', date: '2026-03-24' },
@@ -278,13 +308,9 @@ export const pullRequests: PullRequest[] = [
   { id: 'pr-w4-henry-4', title: 'Implement Beacon data export API', authorId: 'henry', commenterIds: ['alice', 'james'], approverId: 'alice', date: '2026-03-26' },
   { id: 'pr-w4-henry-5', title: 'Fix Beacon query timeout handling', authorId: 'henry', commenterIds: ['alice'], approverId: 'alice', date: '2026-03-27' },
 
-  // Iris — 6 PRs (consistent)
-  { id: 'pr-w4-iris-1', title: 'Build Beacon geographic map view', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-23' },
-  { id: 'pr-w4-iris-2', title: 'Add Beacon bubble chart', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-24' },
-  { id: 'pr-w4-iris-3', title: 'Implement Beacon waterfall chart', authorId: 'iris', commenterIds: ['carol'], approverId: 'bob', date: '2026-03-25' },
-  { id: 'pr-w4-iris-4', title: 'Add Beacon chart drill-through', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-25' },
-  { id: 'pr-w4-iris-5', title: 'Build Beacon dashboard templates', authorId: 'iris', commenterIds: ['grace'], approverId: 'bob', date: '2026-03-26' },
-  { id: 'pr-w4-iris-6', title: 'Fix Beacon chart print styles', authorId: 'iris', commenterIds: ['bob'], approverId: 'bob', date: '2026-03-27' },
+  // Iris — 2 PRs (down from 6). Carol comments.
+  { id: 'pr-w4-iris-1', title: 'Build Beacon geographic map view', authorId: 'iris', commenterIds: ['carol'], approverId: 'carol', date: '2026-03-24' },
+  { id: 'pr-w4-iris-2', title: 'Add Beacon bubble chart', authorId: 'iris', commenterIds: ['carol'], approverId: 'bob', date: '2026-03-27' },
 
   // James — 4 PRs (split across projects)
   { id: 'pr-w4-james-1', title: 'Add Beacon webhook integration', authorId: 'james', commenterIds: ['bob', 'grace'], approverId: 'bob', date: '2026-03-23' },
