@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom'
 import { employees, getMeetings, getPullRequests, getSurveys, DEFAULT_WEIGHTS } from '@/data'
 import type { InteractionWeights } from '@/data'
 import NetworkGraph from '@/components/NetworkGraph'
+import { useInsights } from '@/hooks/useInsights'
+import type { InsightsResult } from '@/hooks/useInsights'
 
 function useEmployeeStats(week: number) {
   const meetings = getMeetings(week)
@@ -46,7 +48,20 @@ function MoodIndicator({ mood }: { mood: number | null }) {
   )
 }
 
-function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[number] }) {
+const ATTENTION_COLORS: Record<number, string> = {
+  1: 'text-green-600',
+  2: 'text-lime-600',
+  3: 'text-yellow-600',
+  4: 'text-orange-500',
+  5: 'text-red-500',
+}
+
+interface TeamMemberCardProps {
+  stat: ReturnType<typeof useEmployeeStats>[number]
+  attention?: InsightsResult['attentionScores'][number]
+}
+
+function TeamMemberCard({ stat, attention }: TeamMemberCardProps) {
   const { employee, meetingCount, meetingMins, prsAuthored, prsReviewed, mood } = stat
 
   return (
@@ -59,8 +74,18 @@ function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[nu
           <h3 className="font-medium">{employee.name}</h3>
           <p className="text-sm text-muted-foreground">{employee.title}</p>
         </div>
-        <MoodIndicator mood={mood} />
+        <div className="flex flex-col items-end gap-1">
+          <MoodIndicator mood={mood} />
+          {attention && (
+            <span className={`text-xs font-medium ${ATTENTION_COLORS[attention.score]}`}>
+              Attention: {attention.score}/5
+            </span>
+          )}
+        </div>
       </div>
+      {attention && (
+        <p className="mt-2 text-xs text-muted-foreground">{attention.reason}</p>
+      )}
       <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
         <Stat label="PRs" value={prsAuthored} />
         <Stat label="Reviews" value={prsReviewed} />
@@ -105,6 +130,68 @@ function useContainerSize(ref: React.RefObject<HTMLDivElement | null>) {
   return size
 }
 
+function InsightsPanel({ data, loading, error, refresh }: {
+  data: InsightsResult | null
+  loading: boolean
+  error: string | null
+  refresh: () => void
+}) {
+  if (loading) {
+    return (
+      <div className="rounded-lg border bg-card p-6">
+        <div className="animate-pulse space-y-3">
+          <div className="h-4 bg-muted rounded w-48" />
+          <div className="h-3 bg-muted rounded w-full" />
+          <div className="h-3 bg-muted rounded w-3/4" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-lg border bg-card p-6">
+        <p className="text-sm text-destructive">Failed to load insights: {error}</p>
+        <button
+          onClick={refresh}
+          className="mt-2 text-sm text-primary hover:underline"
+        >
+          Retry
+        </button>
+      </div>
+    )
+  }
+
+  if (!data) return null
+
+  return (
+    <div className="grid grid-cols-2 gap-4">
+      <div className="rounded-lg border bg-card p-4">
+        <h3 className="font-medium text-green-600 mb-3">Positive Dynamics</h3>
+        <ul className="space-y-2">
+          {data.positives.map((p, i) => (
+            <li key={i}>
+              <div className="text-sm font-medium">{p.title}</div>
+              <div className="text-xs text-muted-foreground">{p.detail}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="rounded-lg border bg-card p-4">
+        <h3 className="font-medium text-orange-500 mb-3">Hotspots</h3>
+        <ul className="space-y-2">
+          {data.hotspots.map((h, i) => (
+            <li key={i}>
+              <div className="text-sm font-medium">{h.title}</div>
+              <div className="text-xs text-muted-foreground">{h.detail}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
 const FACTOR_LABELS = [
   { key: 'meetings' as const, label: 'Meetings' },
   { key: 'prs' as const, label: 'PRs' },
@@ -113,6 +200,7 @@ const FACTOR_LABELS = [
 
 export default function Home({ week }: { week: number }) {
   const stats = useEmployeeStats(week)
+  const { data: insights, loading, error, refresh } = useInsights(week)
   const graphContainerRef = useRef<HTMLDivElement>(null)
   const { width: graphWidth, height: graphHeight } = useContainerSize(graphContainerRef)
 
@@ -130,57 +218,84 @@ export default function Home({ week }: { week: number }) {
     surveyMention: enabledFactors.surveys ? DEFAULT_WEIGHTS.surveyMention : 0,
   }), [enabledFactors])
 
+  const attentionMap = useMemo(() => {
+    const map = new Map<string, InsightsResult['attentionScores'][number]>()
+    if (insights?.attentionScores) {
+      for (const a of insights.attentionScores) {
+        map.set(a.employeeId, a)
+      }
+    }
+    return map
+  }, [insights])
+
+  const sortedStats = useMemo(() => {
+    if (!insights?.attentionScores) return stats
+    return [...stats].sort((a, b) => {
+      const aScore = attentionMap.get(a.employee.id)?.score ?? 0
+      const bScore = attentionMap.get(b.employee.id)?.score ?? 0
+      return bScore - aScore
+    })
+  }, [stats, insights, attentionMap])
+
   function toggleFactor(key: 'meetings' | 'prs' | 'surveys') {
     setEnabledFactors((prev) => ({ ...prev, [key]: !prev[key] }))
   }
 
   return (
-    <div className="flex gap-6 p-6">
-      <div className="flex-1 min-w-0">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {stats.map((stat) => (
-            <TeamMemberCard key={stat.employee.id} stat={stat} />
-          ))}
-        </div>
-      </div>
+    <div className="p-6 space-y-6">
+      <InsightsPanel data={insights} loading={loading} error={error} refresh={refresh} />
 
-      <div className="w-[420px] shrink-0">
-        <div className="rounded-lg border bg-card sticky top-6">
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 border-b">
-            <span className="text-sm font-medium">Interactions</span>
-            {FACTOR_LABELS.map(({ key, label }) => (
-              <label key={key} className="flex items-center gap-1.5 text-sm cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={enabledFactors[key]}
-                  onChange={() => toggleFactor(key)}
-                  className="rounded"
-                />
-                {label}
-              </label>
-            ))}
-            <div className="flex items-center gap-2 ml-auto">
-              <span className="text-xs text-muted-foreground">Min</span>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.05}
-                value={minWeight}
-                onChange={(e) => setMinWeight(parseFloat(e.target.value))}
-                className="w-20"
+      <div className="flex gap-6">
+        <div className="flex-1 min-w-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {sortedStats.map((stat) => (
+              <TeamMemberCard
+                key={stat.employee.id}
+                stat={stat}
+                attention={attentionMap.get(stat.employee.id)}
               />
-              <span className="text-xs text-muted-foreground w-7">{minWeight.toFixed(2)}</span>
-            </div>
+            ))}
           </div>
-          <div ref={graphContainerRef} className="aspect-square">
-            <NetworkGraph
-              week={week}
-              width={graphWidth}
-              height={graphHeight}
-              weights={weights}
-              minWeight={minWeight}
-            />
+        </div>
+
+        <div className="w-[420px] shrink-0">
+          <div className="rounded-lg border bg-card sticky top-6">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 border-b">
+              <span className="text-sm font-medium">Interactions</span>
+              {FACTOR_LABELS.map(({ key, label }) => (
+                <label key={key} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={enabledFactors[key]}
+                    onChange={() => toggleFactor(key)}
+                    className="rounded"
+                  />
+                  {label}
+                </label>
+              ))}
+              <div className="flex items-center gap-2 ml-auto">
+                <span className="text-xs text-muted-foreground">Min</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={1}
+                  step={0.05}
+                  value={minWeight}
+                  onChange={(e) => setMinWeight(parseFloat(e.target.value))}
+                  className="w-20"
+                />
+                <span className="text-xs text-muted-foreground w-7">{minWeight.toFixed(2)}</span>
+              </div>
+            </div>
+            <div ref={graphContainerRef} className="aspect-square">
+              <NetworkGraph
+                week={week}
+                width={graphWidth}
+                height={graphHeight}
+                weights={weights}
+                minWeight={minWeight}
+              />
+            </div>
           </div>
         </div>
       </div>
