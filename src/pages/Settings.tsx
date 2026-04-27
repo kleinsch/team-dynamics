@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react'
-
-const STORAGE_KEY = 'managementStyle'
-const DEFAULT_STYLE = `I'm an engineering manager focused on team health and individual growth. I value open communication and want to help my team members grow in their careers.`
+import { useState } from 'react'
+import { useManagementStyle, DEFAULT_MANAGEMENT_STYLE } from '@/hooks/useManagementStyle'
 
 export default function Settings() {
-  const [style, setStyle] = useState(() => localStorage.getItem(STORAGE_KEY) ?? DEFAULT_STYLE)
+  const { style, setStyle } = useManagementStyle()
+  const [draft, setDraft] = useState(style)
   const [saved, setSaved] = useState(false)
 
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, style)
-  }, [style])
-
   function handleSave() {
-    localStorage.setItem(STORAGE_KEY, style)
+    setStyle(draft)
     setSaved(true)
     setTimeout(() => setSaved(false), 2000)
   }
@@ -24,11 +19,11 @@ export default function Settings() {
         Describe your management style and goals. This is passed to the AI so insights and guidance are tailored to you.
       </p>
       <textarea
-        value={style}
-        onChange={(e) => setStyle(e.target.value)}
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
         rows={6}
         className="mt-4 w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-ring"
-        placeholder={DEFAULT_STYLE}
+        placeholder={DEFAULT_MANAGEMENT_STYLE}
       />
       <div className="mt-3 flex items-center gap-3">
         <button

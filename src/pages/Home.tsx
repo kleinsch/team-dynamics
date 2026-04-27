@@ -5,6 +5,7 @@ import type { InteractionWeights } from '@/data'
 import NetworkGraph from '@/components/NetworkGraph'
 import { useInsights } from '@/hooks/useInsights'
 import type { InsightsResult } from '@/hooks/useInsights'
+import { useManagementStyle } from '@/hooks/useManagementStyle'
 
 function useEmployeeStats(week: number) {
   const meetings = getMeetings(week)
@@ -200,7 +201,8 @@ const FACTOR_LABELS = [
 
 export default function Home({ week }: { week: number }) {
   const stats = useEmployeeStats(week)
-  const { data: insights, loading, error, refresh } = useInsights(week)
+  const { style: managementStyle } = useManagementStyle()
+  const { data: insights, loading, error, refresh } = useInsights(week, managementStyle)
   const graphContainerRef = useRef<HTMLDivElement>(null)
   const { width: graphWidth, height: graphHeight } = useContainerSize(graphContainerRef)
 
