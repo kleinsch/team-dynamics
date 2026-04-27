@@ -28,6 +28,8 @@ function useEmployeeStats(week: number) {
       prsAuthored,
       prsReviewed,
       mood: survey?.mood ?? null,
+      blockers: survey?.blockers ?? null,
+      helpfulColleagues: survey?.helpfulColleagues ?? [],
     }
   })
 }
@@ -50,7 +52,7 @@ function MoodIndicator({ mood }: { mood: number | null }) {
 }
 
 function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[number] }) {
-  const { employee, meetingCount, meetingMins, prsAuthored, prsReviewed, mood } = stat
+  const { employee, meetingCount, meetingMins, prsAuthored, prsReviewed, mood, blockers, helpfulColleagues } = stat
 
   return (
     <Link
@@ -69,6 +71,17 @@ function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[nu
         <Stat label="Reviews" value={prsReviewed} />
         <Stat label="Meetings" value={meetingCount} detail={`${Math.round(meetingMins / 60)}h`} />
       </div>
+      {blockers && (
+        <p className="mt-3 text-xs text-muted-foreground line-clamp-2">
+          <span className="font-medium text-foreground">Blockers: </span>{blockers}
+        </p>
+      )}
+      {helpfulColleagues.length > 0 && (
+        <p className="mt-1 text-xs text-muted-foreground">
+          <span className="font-medium text-foreground">Helped by: </span>
+          {helpfulColleagues.map((id) => employees.find((e) => e.id === id)?.name.split(' ')[0] ?? id).join(', ')}
+        </p>
+      )}
     </Link>
   )
 }
@@ -219,10 +232,10 @@ export default function Home({ week }: { week: number }) {
 
         <div className="w-[420px] shrink-0">
           <div className="rounded-lg border bg-card sticky top-6">
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 border-b">
-              <span className="text-sm font-medium">Interactions</span>
+            <div className="flex items-center gap-2 px-3 py-2 border-b text-sm">
+              <span className="font-medium">Interactions</span>
               {FACTOR_LABELS.map(({ key, label }) => (
-                <label key={key} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                <label key={key} className="flex items-center gap-1 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={enabledFactors[key]}
@@ -232,19 +245,15 @@ export default function Home({ week }: { week: number }) {
                   {label}
                 </label>
               ))}
-              <div className="flex items-center gap-2 ml-auto">
-                <span className="text-xs text-muted-foreground">Min</span>
-                <input
-                  type="range"
-                  min={0}
-                  max={1}
-                  step={0.05}
-                  value={minWeight}
-                  onChange={(e) => setMinWeight(parseFloat(e.target.value))}
-                  className="w-20"
-                />
-                <span className="text-xs text-muted-foreground w-7">{minWeight.toFixed(2)}</span>
-              </div>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.05}
+                value={minWeight}
+                onChange={(e) => setMinWeight(parseFloat(e.target.value))}
+                className="w-16"
+              />
             </div>
             <div ref={graphContainerRef} className="aspect-square">
               <NetworkGraph
