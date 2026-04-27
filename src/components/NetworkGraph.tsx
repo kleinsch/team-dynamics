@@ -1,7 +1,7 @@
 import { useMemo, useCallback, useRef, useEffect } from 'react'
 import { forceX, forceY } from 'd3-force'
 import ForceGraph2D, { type ForceGraphMethods, type NodeObject, type LinkObject } from 'react-force-graph-2d'
-import { employees, computeInteractions } from '@/data'
+import { employees, computeInteractions, getSurveys } from '@/data'
 import type { InteractionWeights, InteractionLink } from '@/data'
 
 interface GraphNode {
@@ -19,7 +19,25 @@ interface Props {
   minWeight: number
 }
 
+const MOOD_COLORS: Record<number, string> = {
+  1: '#ef4444', // red-500
+  2: '#fb923c', // orange-400
+  3: '#facc15', // yellow-400
+  4: '#a3e635', // lime-400
+  5: '#22c55e', // green-500
+}
+const NO_SURVEY_COLOR = '#9ca3af'
+
 export default function NetworkGraph({ week, width, height, weights, minWeight }: Props) {
+  const moodMap = useMemo(() => {
+    const surveys = getSurveys(week)
+    const map = new Map<string, number>()
+    for (const s of surveys) {
+      map.set(s.employeeId, s.mood)
+    }
+    return map
+  }, [week])
+
   const graphData = useMemo(() => {
     const nodes: GraphNode[] = employees.map((e) => ({
       id: e.id,
@@ -76,10 +94,12 @@ export default function NetworkGraph({ week, width, height, weights, minWeight }
       const x = node.x ?? 0
       const y = node.y ?? 0
       const r = 8
+      const mood = moodMap.get(node.id)
+      const color = mood ? MOOD_COLORS[mood] : NO_SURVEY_COLOR
 
       ctx.beginPath()
       ctx.arc(x, y, r, 0, 2 * Math.PI, false)
-      ctx.fillStyle = '#6366f1'
+      ctx.fillStyle = color
       ctx.fill()
 
       ctx.font = '10px sans-serif'
@@ -88,7 +108,7 @@ export default function NetworkGraph({ week, width, height, weights, minWeight }
       ctx.fillStyle = '#888'
       ctx.fillText(node.name, x, y + r + 3)
     },
-    [],
+    [moodMap],
   )
 
   const nodePointerAreaPaint = useCallback(
