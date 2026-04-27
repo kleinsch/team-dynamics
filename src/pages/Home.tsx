@@ -1,5 +1,8 @@
+import { useRef, useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { employees, getMeetings, getPullRequests, getSurveys } from '@/data'
+import { employees, getMeetings, getPullRequests, getSurveys, DEFAULT_WEIGHTS } from '@/data'
+import type { InteractionWeights } from '@/data'
+import NetworkGraph from '@/components/NetworkGraph'
 
 function useEmployeeStats(week: number) {
   const meetings = getMeetings(week)
@@ -79,15 +82,107 @@ function Stat({ label, value, detail }: { label: string; value: number; detail?:
   )
 }
 
+function useContainerSize(ref: React.RefObject<HTMLDivElement | null>) {
+  const [size, setSize] = useState({ width: 0, height: 0 })
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0]
+      if (entry) {
+        setSize({
+          width: Math.floor(entry.contentRect.width),
+          height: Math.floor(entry.contentRect.height),
+        })
+      }
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [ref])
+
+  return size
+}
+
+const FACTOR_LABELS = [
+  { key: 'meetings' as const, label: 'Meetings' },
+  { key: 'prs' as const, label: 'PRs' },
+  { key: 'surveys' as const, label: 'Surveys' },
+]
+
 export default function Home({ week }: { week: number }) {
   const stats = useEmployeeStats(week)
+  const graphContainerRef = useRef<HTMLDivElement>(null)
+  const { width: graphWidth, height: graphHeight } = useContainerSize(graphContainerRef)
+
+  const [enabledFactors, setEnabledFactors] = useState({
+    meetings: true,
+    prs: true,
+    surveys: true,
+  })
+  const [minWeight, setMinWeight] = useState(0.5)
+
+  const weights: InteractionWeights = useMemo(() => ({
+    meeting: enabledFactors.meetings ? DEFAULT_WEIGHTS.meeting : 0,
+    prComment: enabledFactors.prs ? DEFAULT_WEIGHTS.prComment : 0,
+    prApproval: enabledFactors.prs ? DEFAULT_WEIGHTS.prApproval : 0,
+    surveyMention: enabledFactors.surveys ? DEFAULT_WEIGHTS.surveyMention : 0,
+  }), [enabledFactors])
+
+  function toggleFactor(key: 'meetings' | 'prs' | 'surveys') {
+    setEnabledFactors((prev) => ({ ...prev, [key]: !prev[key] }))
+  }
 
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {stats.map((stat) => (
-          <TeamMemberCard key={stat.employee.id} stat={stat} />
-        ))}
+    <div className="flex gap-6 p-6">
+      <div className="flex-1 min-w-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {stats.map((stat) => (
+            <TeamMemberCard key={stat.employee.id} stat={stat} />
+          ))}
+        </div>
+      </div>
+
+      <div className="w-[420px] shrink-0">
+        <div className="rounded-lg border bg-card sticky top-6">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 border-b">
+            <span className="text-sm font-medium">Interactions</span>
+            {FACTOR_LABELS.map(({ key, label }) => (
+              <label key={key} className="flex items-center gap-1.5 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={enabledFactors[key]}
+                  onChange={() => toggleFactor(key)}
+                  className="rounded"
+                />
+                {label}
+              </label>
+            ))}
+            <div className="flex items-center gap-2 ml-auto">
+              <span className="text-xs text-muted-foreground">Min</span>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.05}
+                value={minWeight}
+                onChange={(e) => setMinWeight(parseFloat(e.target.value))}
+                className="w-20"
+              />
+              <span className="text-xs text-muted-foreground w-7">{minWeight.toFixed(2)}</span>
+            </div>
+          </div>
+          <div ref={graphContainerRef} className="aspect-square">
+            <NetworkGraph
+              week={week}
+              width={graphWidth}
+              height={graphHeight}
+              weights={weights}
+              minWeight={minWeight}
+            />
+          </div>
+        </div>
       </div>
     </div>
   )

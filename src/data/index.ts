@@ -6,6 +6,8 @@ import type { Meeting, PullRequest, SurveyResponse } from './types'
 
 export { employees }
 export type { Employee, Meeting, PullRequest, SurveyResponse } from './types'
+export { computeInteractions, DEFAULT_WEIGHTS } from './interactions'
+export type { InteractionWeights, InteractionLink } from './interactions'
 
 const weekRanges: Record<number, { start: string; end: string }> = {
   1: { start: '2026-03-02', end: '2026-03-06' },
