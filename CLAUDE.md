@@ -22,13 +22,16 @@ Functional prototype: managers gain deeper understanding of team dynamics throug
 - Use `git -C` -- just run `git` directly, you're already in the project directory
 - Source `~/.zshrc` or any shell init before commands -- tools are already on PATH
 - Use inline `import("./foo").Type` syntax -- use top-level imports instead
+- Commit or deploy without running `/verify` first
 
 ## Commands
 
-- `pnpm dev` — start dev server
-- `pnpm build` — production build
+- `pnpm dev` — start dev server (port 5173)
+- `pnpm build` — production build (typecheck + vite build)
 - `pnpm lint` — run linter
 - `pnpm preview` — preview production build locally
+- `pnpm deploy` — deploy to Cloudflare Pages
+- `/verify` — **run before committing or deploying** — typechecks, lints, builds, starts dev server, and verifies the page loads via Chrome
 
 ## Project Structure
 
