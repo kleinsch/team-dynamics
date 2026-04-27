@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from '@/pages/Home'
-import TeamMember from '@/pages/TeamMember'
 import Settings from '@/pages/Settings'
 
 const WEEKS = [1, 2, 3, 4] as const
@@ -37,7 +36,6 @@ export default function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home week={currentWeek} />} />
-        <Route path="/team/:id" element={<TeamMember />} />
         <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>

@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 import { employees, getMeetings, getPullRequests, getSurveys, DEFAULT_WEIGHTS } from '@/data'
 import type { InteractionWeights } from '@/data'
 import NetworkGraph from '@/components/NetworkGraph'
@@ -55,10 +54,7 @@ function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[nu
   const { employee, meetingCount, meetingMins, prsAuthored, prsReviewed, mood, blockers, helpfulColleagues } = stat
 
   return (
-    <Link
-      to={`/team/${employee.id}`}
-      className="block rounded-lg border bg-card p-4 hover:border-foreground/20 transition-colors"
-    >
+    <div className="rounded-lg border bg-card p-4">
       <div className="flex items-start justify-between">
         <div>
           <h3 className="font-medium">{employee.name}</h3>
@@ -82,7 +78,7 @@ function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[nu
           {helpfulColleagues.map((id) => employees.find((e) => e.id === id)?.name.split(' ')[0] ?? id).join(', ')}
         </p>
       )}
-    </Link>
+    </div>
   )
 }
 
