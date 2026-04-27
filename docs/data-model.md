@@ -35,6 +35,7 @@ interface PullRequest {
   title: string
   authorId: string        // employee id
   commenterIds: string[]  // employee ids who commented
+  approverId: string      // employee id who approved
   date: string            // ISO date
 }
 ```

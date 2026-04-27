@@ -18,7 +18,6 @@ Generate static fake data to power the demo.
 - Create 12 employees with realistic names and titles
 - Generate 4 weeks of meetings, PRs, and survey responses
 - Build derived data: interaction strengths, weekly summaries
-- Write a seed data generation script (run once, output committed as static files)
 
 ## Phase 3: UI Creation and Visualization
 
