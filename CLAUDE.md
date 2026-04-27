@@ -9,6 +9,20 @@ Functional prototype: managers gain deeper understanding of team dynamics throug
 - Deployed to Cloudflare Pages
 - No backend — static fake data powers the demo
 
+## Do NOT
+
+- Add new dependencies without explicit approval
+- Create wrapper abstractions around shadcn/ui components
+- Add state management libraries -- use React state/context
+- Over-engineer: no barrel files, no index re-exports, no "utils" dumping grounds
+- Use `npm` or `yarn` -- only `pnpm`
+- Skip TypeScript strict checks or use `any`
+- Add comments, docstrings, or type annotations to code you didn't change
+- Suppress lint rules (no eslint-disable comments) -- fix the underlying issue instead
+- Use `git -C` -- just run `git` directly, you're already in the project directory
+- Source `~/.zshrc` or any shell init before commands -- tools are already on PATH
+- Use inline `import("./foo").Type` syntax -- use top-level imports instead
+
 ## Commands
 
 - `pnpm dev` — start dev server
