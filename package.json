@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "wrangler pages dev -- vite",
+    "dev": "concurrently \"vite\" \"wrangler pages dev --proxy 5173\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "CLOUDFLARE_ACCOUNT_ID=aa932c344dc3e6671a96bafb2d4e52dc wrangler pages deploy dist",
+    "deploy": "CLOUDFLARE_ACCOUNT_ID=aa932c344dc3e6671a96bafb2d4e52dc wrangler pages deploy dist --project-name team-dynamics",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -42,6 +42,7 @@
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
     "eslint": "^10.2.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",

@@ -111,7 +111,8 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     content: { type: string; text: string }[]
   }
 
-  const text = result.content[0]?.text ?? ''
+  const rawText = result.content[0]?.text ?? ''
+  const text = rawText.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '')
 
   try {
     const insights = JSON.parse(text)
