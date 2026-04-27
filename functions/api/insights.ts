@@ -22,51 +22,60 @@ function throughWeek(date: string, week: number): boolean {
   return false
 }
 
-function buildPrompt(week: number, managementStyle: string): string {
-  const mtgs = meetings.filter((m) => throughWeek(m.date, week))
-  const prs = pullRequests.filter((pr) => throughWeek(pr.date, week))
-  const surveys = surveyResponses.filter((s) => throughWeek(s.date, week))
-
-  return `You are an AI assistant helping an engineering manager understand their team dynamics. Analyze the data below and provide actionable insights.
-
-## Manager's Style and Goals
-${managementStyle}
-
-## Team Data (through week ${week})
-
-### Employees
-${JSON.stringify(employees, null, 2)}
-
-### Meetings
-${JSON.stringify(mtgs, null, 2)}
-
-### Pull Requests
-${JSON.stringify(prs, null, 2)}
-
-### Survey Responses
-${JSON.stringify(surveys, null, 2)}
-
-## Instructions
-Based on this data, provide your analysis as JSON with exactly this structure:
-{
-  "positives": [
-    { "title": "short title", "detail": "1-2 sentence explanation" }
-  ],
-  "hotspots": [
-    { "title": "short title", "detail": "1-2 sentence explanation" }
-  ],
-  "attentionScores": [
-    { "employeeId": "alice", "score": 1, "reason": "brief reason" }
-  ]
+function formatEmployees(): string {
+  // id|name|title
+  return employees.map((e) => `${e.id}|${e.name}|${e.title}`).join('\n')
 }
 
+function formatMeetings(week: number): string {
+  // date|name|attendees|duration
+  return meetings
+    .filter((m) => throughWeek(m.date, week))
+    .map((m) => `${m.date}|${m.name}|${m.employeeIds.join(',')}|${m.durationMins}m`)
+    .join('\n')
+}
+
+function formatPRs(week: number): string {
+  // date|title|author|commenters|approver
+  return pullRequests
+    .filter((pr) => throughWeek(pr.date, week))
+    .map((pr) => `${pr.date}|${pr.title}|${pr.authorId}|${pr.commenterIds.join(',') || '-'}|${pr.approverId}`)
+    .join('\n')
+}
+
+function formatSurveys(week: number): string {
+  // date|employee|mood|helpful|blocker
+  return surveyResponses
+    .filter((s) => throughWeek(s.date, week))
+    .map((s) => `${s.date}|${s.employeeId}|${s.mood}/5|helped by:${s.helpfulColleagues.join(',') || 'none'}|${s.blockers}`)
+    .join('\n')
+}
+
+function buildPrompt(week: number, managementStyle: string): string {
+  return `Analyze this engineering team's data and provide insights. Be concise.
+
+Manager: ${managementStyle}
+
+EMPLOYEES (id|name|title):
+${formatEmployees()}
+
+MEETINGS through week ${week} (date|name|attendees|duration):
+${formatMeetings(week)}
+
+PRS through week ${week} (date|title|author|commenters|approver):
+${formatPRs(week)}
+
+SURVEYS through week ${week} (date|employee|mood|helpful|blocker):
+${formatSurveys(week)}
+
+Return ONLY JSON:
+{"positives":[{"title":"...","detail":"..."}],"hotspots":[{"title":"...","detail":"..."}]}
+
 Rules:
-- positives: exactly 3 positive team dynamics
-- hotspots: exactly 3 areas of concern or things to investigate
-- attentionScores: one entry per employee (all 12), score 1-5 where 1=doing great and 5=needs immediate attention
-- Tailor your analysis to the manager's style and goals
-- Be specific — reference actual data patterns, not generic advice
-- Return ONLY valid JSON, no markdown or explanation outside the JSON`
+- Exactly 3 positives, exactly 3 hotspots
+- detail: ONE sentence max, reference specific data
+- Tailor to manager's style
+- No markdown, ONLY JSON`
 }
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
@@ -95,7 +104,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     },
     body: JSON.stringify({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 2048,
+      max_tokens: 1024,
       messages: [{ role: 'user', content: prompt }],
     }),
   })
@@ -112,7 +121,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   }
 
   const rawText = result.content[0]?.text ?? ''
-  const text = rawText.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '')
+  // Strip markdown fences and find the JSON object
+  const cleaned = rawText.replace(/^```(?:json)?\s*\n?/, '').replace(/\n?```\s*$/, '')
+  const jsonMatch = cleaned.match(/\{[\s\S]*\}/)
+  const text = jsonMatch ? jsonMatch[0] : cleaned
 
   try {
     const insights = JSON.parse(text)

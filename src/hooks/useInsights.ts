@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from 'react'
 export interface InsightsResult {
   positives: { title: string; detail: string }[]
   hotspots: { title: string; detail: string }[]
-  attentionScores: { employeeId: string; score: number; reason: string }[]
 }
 
 const cache = new Map<string, InsightsResult>()

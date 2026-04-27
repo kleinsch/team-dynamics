@@ -49,20 +49,7 @@ function MoodIndicator({ mood }: { mood: number | null }) {
   )
 }
 
-const ATTENTION_COLORS: Record<number, string> = {
-  1: 'text-green-600',
-  2: 'text-lime-600',
-  3: 'text-yellow-600',
-  4: 'text-orange-500',
-  5: 'text-red-500',
-}
-
-interface TeamMemberCardProps {
-  stat: ReturnType<typeof useEmployeeStats>[number]
-  attention?: InsightsResult['attentionScores'][number]
-}
-
-function TeamMemberCard({ stat, attention }: TeamMemberCardProps) {
+function TeamMemberCard({ stat }: { stat: ReturnType<typeof useEmployeeStats>[number] }) {
   const { employee, meetingCount, meetingMins, prsAuthored, prsReviewed, mood } = stat
 
   return (
@@ -75,18 +62,8 @@ function TeamMemberCard({ stat, attention }: TeamMemberCardProps) {
           <h3 className="font-medium">{employee.name}</h3>
           <p className="text-sm text-muted-foreground">{employee.title}</p>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <MoodIndicator mood={mood} />
-          {attention && (
-            <span className={`text-xs font-medium ${ATTENTION_COLORS[attention.score]}`}>
-              Attention: {attention.score}/5
-            </span>
-          )}
-        </div>
+        <MoodIndicator mood={mood} />
       </div>
-      {attention && (
-        <p className="mt-2 text-xs text-muted-foreground">{attention.reason}</p>
-      )}
       <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
         <Stat label="PRs" value={prsAuthored} />
         <Stat label="Reviews" value={prsReviewed} />
@@ -220,25 +197,6 @@ export default function Home({ week }: { week: number }) {
     surveyMention: enabledFactors.surveys ? DEFAULT_WEIGHTS.surveyMention : 0,
   }), [enabledFactors])
 
-  const attentionMap = useMemo(() => {
-    const map = new Map<string, InsightsResult['attentionScores'][number]>()
-    if (insights?.attentionScores) {
-      for (const a of insights.attentionScores) {
-        map.set(a.employeeId, a)
-      }
-    }
-    return map
-  }, [insights])
-
-  const sortedStats = useMemo(() => {
-    if (!insights?.attentionScores) return stats
-    return [...stats].sort((a, b) => {
-      const aScore = attentionMap.get(a.employee.id)?.score ?? 0
-      const bScore = attentionMap.get(b.employee.id)?.score ?? 0
-      return bScore - aScore
-    })
-  }, [stats, insights, attentionMap])
-
   function toggleFactor(key: 'meetings' | 'prs' | 'surveys') {
     setEnabledFactors((prev) => ({ ...prev, [key]: !prev[key] }))
   }
@@ -250,11 +208,10 @@ export default function Home({ week }: { week: number }) {
       <div className="flex gap-6">
         <div className="flex-1 min-w-0">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {sortedStats.map((stat) => (
+            {stats.map((stat) => (
               <TeamMemberCard
                 key={stat.employee.id}
                 stat={stat}
-                attention={attentionMap.get(stat.employee.id)}
               />
             ))}
           </div>
