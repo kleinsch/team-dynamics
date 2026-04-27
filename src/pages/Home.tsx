@@ -152,7 +152,7 @@ function InsightsPanel({ data, loading, error, refresh }: {
   if (!data) return null
 
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div className="rounded-lg border bg-card p-4">
         <h3 className="font-medium text-green-600 mb-3">Positive Dynamics</h3>
         <ul className="space-y-2">
@@ -211,11 +211,11 @@ export default function Home({ week }: { week: number }) {
   }
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-6">
       <InsightsPanel data={insights} loading={loading} error={error} refresh={refresh} />
 
-      <div className="flex gap-6">
-        <div className="flex-1 min-w-0">
+      <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex-1 min-w-0 order-1 lg:order-none">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {stats.map((stat) => (
               <TeamMemberCard
@@ -226,9 +226,9 @@ export default function Home({ week }: { week: number }) {
           </div>
         </div>
 
-        <div className="w-[420px] shrink-0">
-          <div className="rounded-lg border bg-card sticky top-6">
-            <div className="flex items-center gap-2 px-3 py-2 border-b text-sm">
+        <div className="w-full lg:w-[420px] lg:shrink-0 order-2 lg:order-none">
+          <div className="rounded-lg border bg-card lg:sticky lg:top-6">
+            <div className="flex flex-wrap items-center gap-2 px-3 py-2 border-b text-sm">
               <span className="font-medium">Interactions</span>
               {FACTOR_LABELS.map(({ key, label }) => (
                 <label key={key} className="flex items-center gap-1 cursor-pointer">

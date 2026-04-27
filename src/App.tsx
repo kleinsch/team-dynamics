@@ -10,15 +10,15 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <nav className="border-b px-6 py-3 flex items-center gap-6">
-        <Link to="/" className="font-semibold text-lg">
+      <nav className="border-b px-4 sm:px-6 py-3 flex items-center gap-3 sm:gap-6">
+        <Link to="/" className="font-semibold text-lg shrink-0">
           Team Dynamics
         </Link>
-        <Link to="/settings" className="text-sm text-muted-foreground hover:text-foreground">
+        <Link to="/settings" className="text-sm text-muted-foreground hover:text-foreground shrink-0">
           Settings
         </Link>
-        <div className="ml-auto flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Week</span>
+        <div className="ml-auto flex items-center gap-1.5 sm:gap-2">
+          <span className="text-sm text-muted-foreground hidden sm:inline">Week</span>
           {WEEKS.map((w) => (
             <button
               key={w}
